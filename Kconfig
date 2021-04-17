@@ -1,0 +1,19 @@
+menu "I2C Bus Configuration"
+  menu "Bus Configuration"
+    config ULP_I2C0_SDA_IO
+      int "SDA IO Pin"
+      default 33
+    config ULP_I2C0_SDA_PULL_UP
+      bool "Enable SDA Internal Pull-up"
+      default n
+    config ULP_I2C0_SCL_IO
+      int "SCL IO Pin"
+      default 32
+    config ULP_I2C0_SCL_PULL_UP
+      bool "Enable SCL Internal Pull-up"
+      default n
+    config ULP_I2C0_FREQ
+      int "Clock Frequency, Hz"
+      default 100000
+  endmenu
+endmenu # "I2C Bus Configuration"

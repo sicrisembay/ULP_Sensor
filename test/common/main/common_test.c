@@ -7,6 +7,7 @@
 #include "driver/gpio.h"
 #include "driver/rtc_io.h"
 #include "esp32/ulp.h"
+#include "sdkconfig.h"
 
 #include "ulp_main.h"
 extern const uint8_t ulp_main_bin_start[] asm("_binary_ulp_main_bin_start");
@@ -14,19 +15,21 @@ extern const uint8_t ulp_main_bin_end[]   asm("_binary_ulp_main_bin_end");
 
 static void init_ulp_program()
 {
-//    rtc_gpio_init(gpio_scl);
-//    rtc_gpio_set_direction(gpio_scl, RTC_GPIO_MODE_INPUT_ONLY);
-//    rtc_gpio_init(gpio_sda);
-//    rtc_gpio_set_direction(gpio_sda, RTC_GPIO_MODE_INPUT_ONLY);
-
     esp_err_t err = ulp_load_binary(0, ulp_main_bin_start,
             (ulp_main_bin_end - ulp_main_bin_start) / sizeof(uint32_t));
     ESP_ERROR_CHECK(err);
 
-    /* Set ULP wake up period to T = 1000ms
+    ulp_upcount = 0;
+    ulp_downcount = 0x7FFF;
+
+    /* Set ULP wake up period to T = 10s.
      * Minimum pulse width has to be T * (ulp_debounce_counter + 1) = 80ms.
      */
-    REG_SET_FIELD(SENS_ULP_CP_SLEEP_CYC0_REG, SENS_SLEEP_CYCLES_S0, 1500000);
+    ulp_set_wakeup_period(0, 10000000);
+
+    /* Start the program */
+    err = ulp_run(&ulp_entry - RTC_SLOW_MEM);
+    ESP_ERROR_CHECK(err);
 
 }
 
@@ -39,16 +42,10 @@ void app_main()
     } else {
 
         printf("ULP wakeup, printing status\n");
-//        print_status();
+        printf("upcount: %d, downcount:%d\n", (short)ulp_upcount, (short)ulp_downcount);
     }
 
     printf("Entering deep sleep\n\n");
-
     ESP_ERROR_CHECK( esp_sleep_enable_ulp_wakeup() );
-
-    /* Start the program */
-    esp_err_t err = ulp_run(&ulp_entry - RTC_SLOW_MEM);
-    ESP_ERROR_CHECK(err);
-
     esp_deep_sleep_start();
 }

@@ -1,10 +1,26 @@
 /*
  * Stack Macros
  * 
- * Note1: R3 is used as stack pointer
+ * Note1: ULP assembly files are passed through C preprocessor first, so include directives
+ * and C macros may be used in these files
+ *
+ * Note2: R3 is used as stack pointer
  *
  */
 
+    .global stackStart
+stackStart:
+    .skip 100
+    .global stackEnd
+stackEnd:
+    .long 0
+
+/*
+ * Initialize stack pointer
+ */
+.macro stack_init
+    move r3, stackEnd
+.endm
 
 /*
  * Push element in rx to stack

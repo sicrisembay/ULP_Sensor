@@ -1,9 +1,9 @@
 /*
  * Routine Macros
+ *
+ * Note1: ULP assembly files are passed through C preprocessor first, so include directives
+ * and C macros may be used in these files
  */
-
-#include "m_stack.S"
-
 
 /*
  * Call Routine Macro

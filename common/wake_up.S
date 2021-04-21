@@ -5,6 +5,8 @@
 #include "soc/rtc_cntl_reg.h"
 #include "soc/soc_ulp.h"
 
+#pragma once
+
     .text
     .global wake_up
 wake_up:

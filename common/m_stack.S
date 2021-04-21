@@ -7,6 +7,7 @@
  * Note2: R3 is used as stack pointer
  *
  */
+#pragma once
 
     .global stackStart
 stackStart:

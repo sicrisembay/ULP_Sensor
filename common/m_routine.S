@@ -4,7 +4,6 @@
  * Note1: ULP assembly files are passed through C preprocessor first, so include directives
  * and C macros may be used in these files
  */
-#pragma once
 
 /*
  * Call Routine Macro
@@ -16,9 +15,9 @@
  *
  * Affected: r2, r3
  */
-.macro rcall routine pc=.
-    .set _retAddr, (\pc + 16)
-    move r2, _retAddr
+.macro rcall routine
+    .set _retAddr2, (. + 16)
+    move r2, _retAddr2
     push r2
     jump \routine
 .endm

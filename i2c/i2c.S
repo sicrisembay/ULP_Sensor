@@ -5,12 +5,11 @@
  *   https://en.wikipedia.org/wiki/I%C2%B2C
  *
  */
-
-#include "../common/m_stack.S"
-#include "../common/m_routine.S"
-
-#pragma once
-
+#include "soc/rtc_cntl_reg.h"
+#include "soc/rtc_io_reg.h"
+#include "soc/soc_ulp.h"
+#include "m_stack.S"
+#include "m_routine.S"
 
 #define SDA_RTC_GPIO    (8)     // RTC_GPIO_8 == GPIO_33
 #define SCL_RTC_GPIO    (9)     // RTC_GPIO_9 == GPIO_32
@@ -208,7 +207,6 @@ stop_clock_stretch:
  * STACK (R3) --> Caller return address
  */
     .text
-    .global i2c_write_bit
 i2c_write_bit:
     jumpr i2c_write_bit0, 1, lt
     set_SDA
@@ -245,7 +243,6 @@ write_bit_clock_stretch:
  * STACK (R3) --> Caller return address
  */
     .text
-    .global i2c_read_bit
 i2c_read_bit:
     set_SDA
     i2c_delay

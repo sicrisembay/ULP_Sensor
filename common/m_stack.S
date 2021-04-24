@@ -7,14 +7,6 @@
  * Note2: R3 is used as stack pointer
  *
  */
-#pragma once
-
-    .global stackStart
-stackStart:
-    .skip 100
-    .global stackEnd
-stackEnd:
-    .long 0
 
 /*
  * Initialize stack pointer
@@ -37,5 +29,5 @@ stackEnd:
  */
 .macro pop rx
     add  r3, r3, 1
-    st  \rx, r3, 0
+    ld  \rx, r3, 0
 .endm

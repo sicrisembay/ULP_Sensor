@@ -5,14 +5,15 @@
  *   https://en.wikipedia.org/wiki/I%C2%B2C
  *
  */
+#include "sdkconfig.h"
 #include "soc/rtc_cntl_reg.h"
 #include "soc/rtc_io_reg.h"
 #include "soc/soc_ulp.h"
 #include "m_stack.S"
 #include "m_routine.S"
 
-#define SDA_RTC_GPIO    (8)     // RTC_GPIO_8 == GPIO_33
-#define SCL_RTC_GPIO    (9)     // RTC_GPIO_9 == GPIO_32
+#define SDA_RTC_GPIO    (CONFIG_ULP_I2C_SDA_IO)
+#define SCL_RTC_GPIO    (CONFIG_ULP_I2C_SCL_IO)
 /*
  * Macro: i2c_delay
  * Description: some delay
@@ -21,7 +22,9 @@
 .macro i2c_delay
     // Instruction: Wait cycle
     // Cycles: 2 + cycles, 4 cycles to fetch next instruction
-    wait 14 // (2 + 14 + 4)(1/8MHz) = 2.5us
+    // Note: clock is 8MHz / (REG_CNTL_CK8M_DIV_SEL + 1)
+    //       8MHz / 2 = 4MHz
+    wait 4 // (2 + 4 + 4)(1/4MHz) = 2.5us
 .endm
 
 

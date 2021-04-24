@@ -1,19 +1,41 @@
-menu "I2C Bus Configuration"
-  menu "Bus Configuration"
-    config ULP_I2C0_SDA_IO
-      int "SDA IO Pin"
-      default 33
-    config ULP_I2C0_SDA_PULL_UP
-      bool "Enable SDA Internal Pull-up"
-      default n
-    config ULP_I2C0_SCL_IO
-      int "SCL IO Pin"
-      default 32
-    config ULP_I2C0_SCL_PULL_UP
-      bool "Enable SCL Internal Pull-up"
-      default n
-    config ULP_I2C0_FREQ
-      int "Clock Frequency, Hz"
-      default 100000
-  endmenu
+menu "ULP I2C Bus Configuration"
+  choice ULP_RTC_SDA
+      prompt "ULP RTC SDA Pin"
+      default ULP_RTC_SDA_IO_8
+      config ULP_RTC_SDA_IO_8
+          bool "RTC GPIO 8"
+      config ULP_RTC_SDA_IO_9
+          bool "RTC GPIO 9"
+  endchoice
+  config ULP_I2C_SDA_IO
+    int
+    default 8 if ULP_RTC_SDA_IO_8
+    default 9 if ULP_RTC_SDA_IO_9
+  config ESP32_I2C_SDA_IO
+    int
+    default 33 if ULP_RTC_SDA_IO_8
+    default 32 if ULP_RTC_SDA_IO_9
+
+  choice ULP_RTC_SCL
+      prompt "ULP RTC SCL Pin"
+      default ULP_RTC_SCL_IO_9
+      config ULP_RTC_SCL_IO_8
+          bool "RTC GPIO 8"
+      config ULP_RTC_SCL_IO_9
+          bool "RTC GPIO 9"
+  endchoice
+  config ULP_I2C_SCL_IO
+    int
+    default 8 if ULP_RTC_SCL_IO_8
+    default 9 if ULP_RTC_SCL_IO_9
+  config ESP32_I2C_SCL_IO
+    int
+    default 33 if ULP_RTC_SCL_IO_8
+    default 32 if ULP_RTC_SCL_IO_9
+
 endmenu # "I2C Bus Configuration"
+
+config ULP_SENSOR_INA219
+    bool "INA219"
+    default y
+source "$(ULP_SENSOR_PATH)/ina219/Kconfig"

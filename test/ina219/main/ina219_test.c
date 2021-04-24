@@ -32,6 +32,8 @@ static void init_ulp_program()
             (ulp_main_bin_end - ulp_main_bin_start) / sizeof(uint32_t));
     ESP_ERROR_CHECK(err);
 
+    ulp_ina219_init_done = 0;
+
     /* Set ULP wake up period to T = 10s.
      * Minimum pulse width has to be T * (ulp_debounce_counter + 1) = 80ms.
      */
@@ -53,7 +55,8 @@ void app_main()
 
         printf("ULP wakeup\n");
     }
-
+    printf("ina219 init flag: %04X\n", (short)ulp_ina219_init_done);
+    printf("ina219 config: %04X\n", (short)ulp_ina219_reg_configuration_dev1);
     printf("Entering deep sleep\n\n");
     ESP_ERROR_CHECK( esp_sleep_enable_ulp_wakeup() );
     esp_deep_sleep_start();

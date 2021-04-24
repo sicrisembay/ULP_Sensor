@@ -1,0 +1,4 @@
+// ignore symbolic link files
+m_routine.S
+m_stack.S
+wake_up.S

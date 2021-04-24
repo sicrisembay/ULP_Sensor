@@ -2,9 +2,16 @@
 #include "soc/rtc_io_reg.h"
 #include "soc/soc_ulp.h"
 
-#include "../../../../common/wake_up.S"
-#include "../../../../common/m_stack.S"
-#include "../../../../common/m_routine.S"
+#include "m_stack.S"
+#include "m_routine.S"
+
+    .bss
+    .global stackStart
+stackStart:
+    .skip 100
+    .global stackEnd
+stackEnd:
+    .long 0
 
     .global upcount
 upcount:

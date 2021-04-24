@@ -12,13 +12,14 @@ ULP_S_SOURCES = $(addprefix $(COMPONENT_PATH)/ulp/, \
     main.S \
     wake_up.S \
     i2c.S \
+    ina219.S \
     )
 
 $(info ULP_S_SOURCES is $(ULP_S_SOURCES))
 #
 # 3. List all the component object files which include automatically
 #    generated ULP export file, $(ULP_APP_NAME).h:
-ULP_EXP_DEP_OBJECTS := i2c_test.o
+ULP_EXP_DEP_OBJECTS := ina219_test.o
 #
 # 4. Include build rules for ULP program 
 include $(IDF_PATH)/components/ulp/component_ulp_common.mk

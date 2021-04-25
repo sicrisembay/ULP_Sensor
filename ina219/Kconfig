@@ -36,14 +36,16 @@ menu "INA219 Configuration"
         config ULP_INA219_BUS_DEV1
             int "Bus Voltage Range Setting"
             range 0 1
-            default 1
+            default 0
+            help
+                0: 16V FSR, 1: 32V FSR
         config ULP_INA219_R_DEV1
             int "Shunt Resistance, milli-ohm"
             default 100
         config ULP_INA219_CAL_FS_DEV1
             int "Current/Power Calibration"
             range 0 65535
-            default 0       
+            default 953
     endmenu #"INA219 DEV1 Configuration"
 
     menu "INA219 DEV2 Configuration"
@@ -75,14 +77,16 @@ menu "INA219 Configuration"
         config ULP_INA219_BUS_DEV2
             int "Bus Voltage Range Setting"
             range 0 1
-            default 1
+            default 0
+            help
+                0: 16V FSR, 1: 32V FSR
         config ULP_INA219_R_DEV2
             int "Shunt Resistance, milli-ohm"
             default 100
         config ULP_INA219_CAL_FS_DEV2
             int "Current/Power Calibration"
             range 0 65535
-            default 0
+            default 953
     endmenu # "INA219 DEV2 Configuration"
 
     menu "INA219 DEV3 Configuration"
@@ -114,14 +118,16 @@ menu "INA219 Configuration"
         config ULP_INA219_BUS_DEV3
             int "Bus Voltage Range Setting"
             range 0 1
-            default 1
+            default 0
+            help
+                0: 16V FSR, 1: 32V FSR
         config ULP_INA219_R_DEV3
             int "Shunt Resistance, milli-ohm"
             default 100
         config ULP_INA219_CAL_FS_DEV3
             int "Current/Power Calibration"
             range 0 65535
-            default 0
+            default 953
     endmenu # "INA219 DEV3 Configuration"
 
 endmenu #"INA219 Configuration"

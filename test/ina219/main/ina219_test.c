@@ -56,7 +56,10 @@ void app_main()
         printf("ULP wakeup\n");
     }
     printf("ina219 init flag: %04X\n", (short)ulp_ina219_init_done);
-    printf("ina219 bus voltage reg: %0.1fV\n", 0.004f * ((short)ulp_ina219_bus_regVal >> 3));
+    printf("ina219 shunt voltage reg: %d\n", (short)ulp_ina219_shunt_voltage);
+    printf("ina219 bus voltage reg: %0.1fV\n", 0.004f * ((short)ulp_ina219_bus_voltage >> 3));
+    printf("ina219 power reg: %d\n", (short)ulp_ina219_power);
+    printf("ina219 current reg: %d\n", (short)ulp_ina219_current);
     printf("Entering deep sleep\n\n");
     ESP_ERROR_CHECK( esp_sleep_enable_ulp_wakeup() );
     esp_deep_sleep_start();

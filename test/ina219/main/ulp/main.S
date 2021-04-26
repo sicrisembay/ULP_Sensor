@@ -12,8 +12,20 @@ stackStart:
 stackEnd:
     .long 0
 
-    .global ina219_bus_regVal
-ina219_bus_regVal:
+    .global ina219_shunt_voltage
+ina219_shunt_voltage:
+    .long 0
+
+    .global ina219_bus_voltage
+ina219_bus_voltage:
+    .long 0
+
+    .global ina219_power
+ina219_power:
+    .long 0
+
+    .global ina219_current
+ina219_current:
     .long 0
 
     /* Code goes into .text section */
@@ -48,10 +60,26 @@ test_ina219:
     wait 0xFFFF
     wait 0xFFFF
     wait 20826
-    /* Read Bus Voltage */
+
+    /* Read Shunt Voltage */
+    move r0, 0x00
+    rcall ina219_read_shunt_voltage
+    move r1, ina219_shunt_voltage
+    st r0, r1, 0
+    /* Read Bus Voltage Register */
     move r0, 0x00
     rcall ina219_read_bus_voltage
-    move r1, ina219_bus_regVal
+    move r1, ina219_bus_voltage
+    st r0, r1, 0
+    /* Read Power */
+    move r0, 0x00
+    rcall ina219_read_power
+    move r1, ina219_power
+    st r0, r1, 0
+    /* Read Current */
+    move r0, 0x00
+    rcall ina219_read_current
+    move r1, ina219_current
     st r0, r1, 0
     /*
      * Dev1 MODE Power Down

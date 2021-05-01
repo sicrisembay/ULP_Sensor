@@ -834,7 +834,7 @@ CONFIG_LWIP_HOOK_NETCONN_EXT_RESOLVE_NONE=y
 #
 
 #
-# ULP I2C Bus Configuration
+# ULP Configuration
 #
 CONFIG_ULP_RTC_SDA_IO_8=y
 # CONFIG_ULP_RTC_SDA_IO_9 is not set
@@ -844,7 +844,8 @@ CONFIG_ESP32_I2C_SDA_IO=33
 CONFIG_ULP_RTC_SCL_IO_9=y
 CONFIG_ULP_I2C_SCL_IO=9
 CONFIG_ESP32_I2C_SCL_IO=32
-# end of ULP I2C Bus Configuration
+# CONFIG_ULP_SENSOR_INA219 is not set
+# end of ULP Configuration
 # end of ULP Sensor
 
 #

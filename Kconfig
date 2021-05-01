@@ -1,4 +1,4 @@
-menu "ULP I2C Bus Configuration"
+menu "ULP Configuration"
   choice ULP_RTC_SDA
       prompt "ULP RTC SDA Pin"
       default ULP_RTC_SDA_IO_8
@@ -33,9 +33,7 @@ menu "ULP I2C Bus Configuration"
     default 33 if ULP_RTC_SCL_IO_8
     default 32 if ULP_RTC_SCL_IO_9
 
-endmenu # "I2C Bus Configuration"
+  source "$(ULP_SENSOR_PATH)/ina219/Kconfig"
 
-config ULP_SENSOR_INA219
-    bool "INA219"
-    default y
-source "$(ULP_SENSOR_PATH)/ina219/Kconfig"
+endmenu # "ULP Configuration"
+

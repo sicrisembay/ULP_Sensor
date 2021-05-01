@@ -195,12 +195,14 @@ ina219_init:
 #if (CONFIG_ULP_INA219_DEVICE_COUNT >= 2)
     /* Initialize Device ID  variable */
     move r1, ina219_dev_addr
+    add r1, r1, 4
     move r0, CONFIG_ULP_INA219_ADDR_DEV2
-    st r0, r1, 4    // ina219_dev_addr[1] = CONFIG_ULP_INA219_ADDR_DEV2
+    st r0, r1, 0    // ina219_dev_addr[1] = CONFIG_ULP_INA219_ADDR_DEV2
     /* Configuration Register */
     move r1, ina219_reg_configuration
+    add r1, r1, 4
     move r0, DEFAULT_CONFIGURATION_DEV2
-    st r0, r1, 4
+    st r0, r1, 0
     /*
      * Initialize INA219 Dev2 Configuration
      *   Prepare Stack Frame for ina219_write_reg
@@ -209,12 +211,14 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    ld r0, r1, 4
+    add r1, r1, 4
+    ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CONFIGURATION
     push r0 // Register
     move r1, ina219_reg_configuration
-    ld r0, r1, 4
+    add r1, r1, 4
+    ld r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
     /*
@@ -225,13 +229,15 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    ld r0, r1, 4
+    add r1, r1, 4
+    ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CALIBRATION
     push r0 // Register
     move r1, ina219_reg_calibration
+    add r1, r1, 4
     move r0, CONFIG_ULP_INA219_CAL_FS_DEV2
-    st r0, r1, 4
+    st r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
 #endif /* (CONFIG_ULP_INA219_DEVICE_COUNT >= 2) */
@@ -239,12 +245,14 @@ ina219_init:
 #if (CONFIG_ULP_INA219_DEVICE_COUNT >= 3)
     /* Initialize Device ID  variable */
     move r1, ina219_dev_addr
+    add r1, r1, 8
     move r0, CONFIG_ULP_INA219_ADDR_DEV3
-    st r0, r1, 8    // ina219_dev_addr[3] = CONFIG_ULP_INA219_ADDR_DEV3
+    st r0, r1, 0    // ina219_dev_addr[3] = CONFIG_ULP_INA219_ADDR_DEV3
     /* Configuration Register */
     move r1, ina219_reg_configuration
+    add r1, r1, 8
     move r0, DEFAULT_CONFIGURATION_DEV3
-    st r0, r1, 8
+    st r0, r1, 0
     /*
      * Initialize INA219 Dev3 Configuration
      *   Prepare Stack Frame for ina219_write_reg
@@ -253,12 +261,14 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    ld r0, r1, 8
+    add r1, r1, 8
+    ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CONFIGURATION
     push r0 // Register
     move r1, ina219_reg_configuration
-    ld r0, r1, 8
+    add r1, r1, 8
+    ld r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
     /*
@@ -269,13 +279,15 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    ld r0, r1, 8
+    add r1, r1, 8
+    ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CALIBRATION
     push r0 // Register
     move r1, ina219_reg_calibration
+    add r1, r1, 8
     move r0, CONFIG_ULP_INA219_CAL_FS_DEV3
-    st r0, r1, 8
+    st r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
 #endif /* (CONFIG_ULP_INA219_DEVICE_COUNT >= 3) */

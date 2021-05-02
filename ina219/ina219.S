@@ -137,16 +137,16 @@ ina219_init:
     move r0, 0
     move r1, ina219_dev_addr
     st r0, r1, 0
-    st r0, r1, 4
-    st r0, r1, 8
+    st r0, r1, 1
+    st r0, r1, 2
     move r1, ina219_reg_configuration
     st r0, r1, 0
-    st r0, r1, 4
-    st r0, r1, 8
+    st r0, r1, 1
+    st r0, r1, 2
     move r1, ina219_reg_calibration
     st r0, r1, 0
-    st r0, r1, 4
-    st r0, r1, 8
+    st r0, r1, 1
+    st r0, r1, 2
 
 #if (CONFIG_ULP_INA219_DEVICE_COUNT >= 1)
     /* Initialize Device ID  variable */
@@ -195,12 +195,12 @@ ina219_init:
 #if (CONFIG_ULP_INA219_DEVICE_COUNT >= 2)
     /* Initialize Device ID  variable */
     move r1, ina219_dev_addr
-    add r1, r1, 4
+    add r1, r1, 1
     move r0, CONFIG_ULP_INA219_ADDR_DEV2
     st r0, r1, 0    // ina219_dev_addr[1] = CONFIG_ULP_INA219_ADDR_DEV2
     /* Configuration Register */
     move r1, ina219_reg_configuration
-    add r1, r1, 4
+    add r1, r1, 1
     move r0, DEFAULT_CONFIGURATION_DEV2
     st r0, r1, 0
     /*
@@ -211,13 +211,13 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    add r1, r1, 4
+    add r1, r1, 1
     ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CONFIGURATION
     push r0 // Register
     move r1, ina219_reg_configuration
-    add r1, r1, 4
+    add r1, r1, 1
     ld r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
@@ -229,13 +229,13 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    add r1, r1, 4
+    add r1, r1, 1
     ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CALIBRATION
     push r0 // Register
     move r1, ina219_reg_calibration
-    add r1, r1, 4
+    add r1, r1, 1
     move r0, CONFIG_ULP_INA219_CAL_FS_DEV2
     st r0, r1, 0
     push r0 // 16-bit value
@@ -245,12 +245,12 @@ ina219_init:
 #if (CONFIG_ULP_INA219_DEVICE_COUNT >= 3)
     /* Initialize Device ID  variable */
     move r1, ina219_dev_addr
-    add r1, r1, 8
+    add r1, r1, 2
     move r0, CONFIG_ULP_INA219_ADDR_DEV3
     st r0, r1, 0    // ina219_dev_addr[3] = CONFIG_ULP_INA219_ADDR_DEV3
     /* Configuration Register */
     move r1, ina219_reg_configuration
-    add r1, r1, 8
+    add r1, r1, 2
     move r0, DEFAULT_CONFIGURATION_DEV3
     st r0, r1, 0
     /*
@@ -261,13 +261,13 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    add r1, r1, 8
+    add r1, r1, 2
     ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CONFIGURATION
     push r0 // Register
     move r1, ina219_reg_configuration
-    add r1, r1, 8
+    add r1, r1, 2
     ld r0, r1, 0
     push r0 // 16-bit value
     rcall ina219_write_reg
@@ -279,13 +279,13 @@ ina219_init:
      *     SP --> 16-bit value
      */
     move r1, ina219_dev_addr
-    add r1, r1, 8
+    add r1, r1, 2
     ld r0, r1, 0
     push r0 // Device Address
     move r0, INA219_REG_ADDR_CALIBRATION
     push r0 // Register
     move r1, ina219_reg_calibration
-    add r1, r1, 8
+    add r1, r1, 2
     move r0, CONFIG_ULP_INA219_CAL_FS_DEV3
     st r0, r1, 0
     push r0 // 16-bit value
@@ -411,9 +411,7 @@ ina219_read_reg:
  */
     .text
 ina219_devId_to_devAddr:
-    // calculate array offset
-    lsh r0, r0, 2 // DeviceID * 4
-    // Get address
+    // Get address from array ina219_dev_addr[]
     move r1, ina219_dev_addr
     add r1, r0, r1
     ld r0, r1, 0
@@ -447,8 +445,6 @@ ina219_set_mode:
      *   SP(4)  --> Mode Value
      *   SP(0)  -->
      */
-    /* Array offset */
-    lsh r0, r0, 2
     /* Mode */
     move r1, ina219_reg_configuration
     add r1, r0, r1
@@ -458,7 +454,7 @@ ina219_set_mode:
      *   SP(16) --> Caller return address
      *   SP(12) --> Dev ID
      *   SP(8)  --> Mode Value
-     *   SP(4)  --> Address of ina219_reg_configuration[offset]
+     *   SP(4)  --> Address of ina219_reg_configuration[DeviceId]
      *   SP(0)  -->
      */
     ld r0, r1, 0
